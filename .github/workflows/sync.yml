@@ -9,12 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download latest release
-        uses: pozetroninc/github-action-get-latest-release@v0.6.0
+        uses: robinraju/release-downloader@v1.4
         id: release
         with:
-          owner: damoun
-          repo: sync-twitch-events
-          excludes: prerelease, draft
+          latest: true
+          repository: "damoun/sync-twitch-events"
+          fileName: "sync-twitch-events_v*_x86_64-unknown-linux-musl.tar.gz"
+          out-file-path: "."
       - name: Extract release
         uses: ihiroky/extract-action@v1
         with:
