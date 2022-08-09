@@ -1,0 +1,24 @@
+on:
+  schedule:
+    - cron: "0 22 * * 6"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download latest release
+        uses: pozetroninc/github-action-get-latest-release@v0.6.0
+        with:
+          owner: damoun
+          repo: sync-twitch-events
+          excludes: prerelease, draft
+      - name: Compile and release
+        run: sync-twitch-events
+        env:
+          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+          TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
+          TWITCH_BROADCASTER_ID: 29776980
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          DISCORD_EVENT_LOCATION: https://twitch.tv/dam0un
