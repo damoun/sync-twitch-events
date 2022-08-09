@@ -5,6 +5,7 @@ use futures::TryStreamExt;
 use serenity::json::{JsonMap, json};
 use reqwest::Client as ReqwestClient;
 use twitch_api2::{helix, HelixClient};
+use serenity::model::guild::ScheduledEventType::External;
 use twitch_api2::twitch_oauth2::{AppAccessToken, scopes::Scope};
 use twitch_api2::twitch_oauth2::types::{ClientId, ClientSecret};
 
@@ -51,11 +52,11 @@ async fn create_events(events: Vec<helix::schedule::Segment>) -> Result<(), Box<
     let discord_event_location = std::env::var("DISCORD_EVENT_LOCATION")
     .ok()
     .expect("Please set env: DISCORD_EVENT_LOCATION");
-    let http = Http::new(discord_token);
+    let http = Http::new(&discord_token);
     let mut map = JsonMap::new();
 
-    map.insert("guild_id".to_string(), json!(discord_guild_id.to_string()));
-    map.insert("entity_type".to_string(), json!(3));
+    map.insert("guild_id".to_string(), json!(discord_guild_id));
+    map.insert("entity_type".to_string(), json!(External));
     map.insert("privacy_level".to_string(), json!(2));
     map.insert("entity_metadata".to_string(), json!({
         "location": discord_event_location
@@ -68,7 +69,7 @@ async fn create_events(events: Vec<helix::schedule::Segment>) -> Result<(), Box<
             map.insert("scheduled_end_time".to_string(), json!(_event.end_time.to_string()));
 
             http.create_scheduled_event(
-                discord_guild_id,
+                discord_guild_id.parse::<u64>().unwrap(),
                 &map,
                 Some("Adding new event from Twitch")
             ).await?;
