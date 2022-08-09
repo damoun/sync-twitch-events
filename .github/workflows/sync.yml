@@ -20,7 +20,7 @@ jobs:
         env:
           TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
           TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
-          TWITCH_BROADCASTER_ID: 29776980
+          TWITCH_BROADCASTER_ID: "29776980"
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_EVENT_LOCATION: https://twitch.tv/dam0un
-          DISCORD_GUILD_ID: 306182341888442368
+          DISCORD_GUILD_ID: "306182341888442368"
