@@ -23,3 +23,4 @@ jobs:
           TWITCH_BROADCASTER_ID: 29776980
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_EVENT_LOCATION: https://twitch.tv/dam0un
+          DISCORD_GUILD_ID: 306182341888442368
