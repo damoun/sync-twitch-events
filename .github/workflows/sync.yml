@@ -10,13 +10,17 @@ jobs:
     steps:
       - name: Download latest release
         uses: pozetroninc/github-action-get-latest-release@v0.6.0
+        id: release
         with:
           owner: damoun
           repo: sync-twitch-events
           excludes: prerelease, draft
-      - run: ls -lR
-      - name: Compile and release
-        run: ./sync-twitch-events
+      - name: Extract release
+        uses: ihiroky/extract-action@v1
+        with:
+          file_path: sync-twitch-events_${{ steps.release.outputs.release }}_x86_64-unknown-linux-musl.tar.gz
+          extract_dir: .
+      - run: ./sync-twitch-events
         env:
           TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
           TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
