@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download latest release
-        uses: robinraju/release-downloader@v1.4
-        id: release
+        uses: robinraju/release-downloader@main
+        id: latest_release
         with:
           latest: true
           repository: "damoun/sync-twitch-events"
@@ -19,7 +19,7 @@ jobs:
       - name: Extract release
         uses: ihiroky/extract-action@v1
         with:
-          file_path: sync-twitch-events_${{ steps.release.outputs.release }}_x86_64-unknown-linux-musl.tar.gz
+          file_path: sync-twitch-events_${{ steps.latest_release.outputs.tag_name }}_x86_64-unknown-linux-musl.tar.gz
           extract_dir: .
       - run: ./sync-twitch-events
         env:
