@@ -3,6 +3,7 @@ on:
     paths:
       - src
       - Cargo.*
+  workflow_dispatch:
 
 jobs:
   build:
