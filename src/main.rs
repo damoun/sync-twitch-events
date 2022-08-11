@@ -26,7 +26,6 @@ async fn get_week_schedule() -> Result<Vec<helix::schedule::Segment>, Box<dyn st
 
     let end_of_week = Utc::now().end_of_week().format("%Y-%m-%d").to_string();
     let broadcaster_id = std::env::var("TWITCH_BROADCASTER_ID")
-    .ok()
     .expect("Please set env: TWITCH_BROADCASTER_ID");
     let schedule: Vec<helix::schedule::Segment> = client
     .get_channel_schedule(broadcaster_id, &token)
@@ -44,13 +43,10 @@ async fn get_week_schedule() -> Result<Vec<helix::schedule::Segment>, Box<dyn st
 
 async fn create_events(events: Vec<helix::schedule::Segment>) -> Result<(), Box<dyn std::error::Error + Send + Sync + 'static>> {
     let discord_token = std::env::var("DISCORD_TOKEN")
-    .ok()
     .expect("Please set env: DISCORD_TOKEN");
     let discord_guild_id = std::env::var("DISCORD_GUILD_ID")
-    .ok()
     .expect("Please set env: DISCORD_GUILD_ID");
     let discord_event_location = std::env::var("DISCORD_EVENT_LOCATION")
-    .ok()
     .expect("Please set env: DISCORD_EVENT_LOCATION");
     let http = Http::new(&discord_token);
     let mut map = JsonMap::new();
