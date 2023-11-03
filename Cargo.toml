@@ -12,4 +12,4 @@ reqwest = "0.11.22"
 chrono = "0.4.31"
 now = "0.1.3"
 twitch_api2 = { version = "0.6.1", features = ["reqwest", "helix"] }
-serenity = { version = "0.11.6", features = ["client"] }
+serenity = { version = "0.11.7", features = ["client"] }
